@@ -11,7 +11,12 @@ from flask import request
 from waitress import serve
 
 LOG = logging.getLogger(__name__)
-logging.basicConfig(stream=sys.stdout, level=os.environ.get("LOGLEVEL", "INFO"))
+logging.basicConfig(
+    stream=sys.stdout,
+    level=os.environ.get("LOGLEVEL", "INFO"),
+    format='%(asctime)s.%(msecs)03d %(levelname)s {%(module)s} [%(funcName)s] %(message)s',
+    datefmt='%Y-%m-%d %H:%M:%S'
+)
 
 SETTINGS = {
     'telegram_token': os.environ.get('TELEGRAM_TOKEN'),
