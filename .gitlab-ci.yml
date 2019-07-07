@@ -1,0 +1,26 @@
+variables:
+  DOCKER_DRIVER: overlay2
+  IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
+
+stages:
+  - lint
+  - build
+  - test
+
+services:
+  - docker:dind
+
+pylint:
+  image: python:latest
+  stage: lint
+  script:
+    - pip install flask pylint python-telegram-bot waitress
+    - pylint -d C -d W1203 --rcfile=.pylintrc *.py
+
+build:docker:
+  image: docker:latest
+  stage: build
+  script:
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+    - docker build -t $IMAGE_TAG .
+    - docker push $IMAGE_TAG
