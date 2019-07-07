@@ -81,4 +81,7 @@ def _post_message(message, content=None):
     return ""
 
 if __name__ == '__main__':
-    serve(APP, host='*', port='9119')
+    port = 9119
+    host = '*'
+    LOG.info(f"""Starting alertmanager-telegram-bot, listening on {host}:{port}""")
+    serve(APP, host=host, port=port)
