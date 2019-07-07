@@ -17,6 +17,11 @@ docker run --rm -it \
     hub.ix.ai/docker/alertmanager-telegram-bot:latest
 ```
 
+Run the test agains the bot:
+```
+curl -X POST -d '{"alerts": [{"status":"Testing alertmanager-telegram-bot", "labels":[], "annotations":[], "generatorURL": "http://localhost"}]}' -H "Content-Type: application/json" localhost:9119/alert
+```
+
 ## Configure alertmanager
 ```
 route:
