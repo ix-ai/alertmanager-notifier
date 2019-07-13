@@ -40,3 +40,4 @@ receivers:
 * `TELEGRAM_TOKEN` (no default) - see the [Telegram documentation](https://core.telegram.org/bots#creating-a-new-bot) how to get a new token
 * `TELEGRAM_CHAT_ID` (no default) - see this question on [stackoverflow](https://stackoverflow.com/questions/32423837/telegram-bot-how-to-get-a-group-chat-id)
 * `LOGLEVEL` (default: `INFO`)
+* `PORT` (default: 9119) - the port for the bot
