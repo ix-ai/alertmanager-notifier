@@ -5,7 +5,6 @@ variables:
 stages:
   - lint
   - build
-  - test
 
 services:
   - docker:dind
@@ -14,12 +13,16 @@ pylint:
   image: python:latest
   stage: lint
   script:
+    - curl -o .pylintrc https://tool.ix.ai/.pylintrc
     - pip install flask pylint python-telegram-bot waitress
-    - pylint -d C -d W1203 --rcfile=.pylintrc *.py
+    - pylint --rcfile=.pylintrc src/*.py
 
 build:docker:
   image: docker:latest
   stage: build
+  only:
+    - /^latest$/
+    - tags
   script:
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
     - docker build -t $IMAGE_TAG .

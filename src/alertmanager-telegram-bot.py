@@ -40,7 +40,7 @@ def parse_alert():
     message = '{} alert(s)\n'.format(len(content['alerts']))
 
     for alert in content['alerts']:
-        LOG.debug(f"""Parsing alert: {alert}""")
+        LOG.debug("Parsing alert: {}".format(alert))
         message += '<b>{}</b>\n'.format(alert['status'])
 
         for label in alert['labels']:
@@ -51,6 +51,7 @@ def parse_alert():
         message += '<a href="{}">Generator URL</a>\n\n'.format(alert['generatorURL'])
         return _post_message(message, content)
 
+
 def _post_message(message, content=None):
     """ Sends the message to telegram """
     try:
@@ -60,16 +61,16 @@ def _post_message(message, content=None):
             parse_mode='HTML',
             disable_web_page_preview=True
         )
-        LOG.debug(f"""Sent message: {message}""")
+        LOG.debug("Sent message: {}".format(message))
 
     except TimeoutError as error:
-        LOG.warning(f"""TimeoutError: {error}""")
+        LOG.warning('TimeoutError: {}'.format(error))
         # This should get alertmanager to retry
         return "504 error - Internal Server Exception - TimeoutError", 504
 
     except Exception as error:
         # Catch all the other exceptions so that alertmanager doesn't go into a loop
-        LOG.error(f"""Exception occured: {error}""")
+        LOG.error("Exception occured: {}".format(error))
         LOG.error(content)
         exception_content = html.escape('{}'.format(error))
         body_content = html.escape('{}'.format(content))
@@ -85,8 +86,9 @@ def _post_message(message, content=None):
 
     return ""
 
+
 if __name__ == '__main__':
-    port = 9119
+    port = int(os.environ.get('PORT', '9119'))
     host = '*'
-    LOG.info(f"""Starting alertmanager-telegram-bot, listening on {host}:{port}""")
+    LOG.info("Starting alertmanager-telegram-bot, listening on {}:{}".format(host, port))
     serve(APP, host=host, port=port)
