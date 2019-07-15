@@ -10,11 +10,13 @@ A simple webserver in Flask, that translates alertmanager alerts into telegram m
 ## Running a simple test
 ```
 docker run --rm -it \
-    -p 9119:9119 \
+    -p 9999:9999 \
     -e TELEGRAM_TOKEN="your token" \
     -e TELEGRAM_CHAT_ID="your chat id" \
+    -e PORT=9999 \
+    -e GELF_HOST=graylog \
     --name alertmanager-telegram-bot \
-    hub.ix.ai/docker/alertmanager-telegram-bot:latest
+    registry.gitlab.com/ix.ai/alertmanager-telegram-bot:latest
 ```
 
 Run the test agains the bot:
