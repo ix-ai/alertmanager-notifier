@@ -60,9 +60,9 @@ def parse_alert():
         LOG.debug("Parsing alert: {}".format(alert))
         message += '<b>{}</b>\n'.format(alert['status'])
 
-        for label in alert['labels']:
+        for label in alert.get('labels', []):
             message += '<b>{}</b>: {}\n'.format(label, alert['labels'][label])
-        for annotation in alert['annotations']:
+        for annotation in alert.get('annotations', []):
             message += '<b>{}</b>: {}\n'.format(annotation, alert['annotations'][annotation])
 
         message += '<a href="{}">Generator URL</a>\n\n'.format(alert['generatorURL'])
