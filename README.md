@@ -39,5 +39,7 @@ receivers:
 
 * `TELEGRAM_TOKEN` (no default) - see the [Telegram documentation](https://core.telegram.org/bots#creating-a-new-bot) how to get a new token
 * `TELEGRAM_CHAT_ID` (no default) - see this question on [stackoverflow](https://stackoverflow.com/questions/32423837/telegram-bot-how-to-get-a-group-chat-id)
+* `GELF_HOST` (no default) - if set, the exporter will also log to this [GELF](https://docs.graylog.org/en/3.0/pages/gelf.html) capable host on UDP
+* `GELF_PORT` (defaults to `12201`) - the port to use for GELF logging
 * `LOGLEVEL` (default: `INFO`)
 * `PORT` (default: 9119) - the port for the bot
