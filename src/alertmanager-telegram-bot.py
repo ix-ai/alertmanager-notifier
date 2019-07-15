@@ -38,8 +38,7 @@ def configure_logging():
             host=os.environ.get('GELF_HOST'),
             port=int(os.environ.get('GELF_PORT', 12201)),
             debug=True,
-            include_extra_fields=True,
-            _exchange=os.environ.get('EXCHANGE', 'unconfigured')
+            include_extra_fields=True
         )
         LOG.addHandler(GELF)
         gelf_enabled = True
