@@ -15,6 +15,9 @@ stages:
 services:
   - docker:dind
 
+tags:
+  - ix-ai
+
 pylint:
   image: python:latest
   stage: lint
