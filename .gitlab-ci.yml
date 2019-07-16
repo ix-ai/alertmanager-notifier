@@ -15,7 +15,16 @@ stages:
 services:
   - docker:dind
 
+.tags-template: &tags-definition
+  tags:
+    - ix-ai
+
+.docker_login: &docker_login_template
+  before_script:
+    - docker login -u ${CI_REGISTRY_USER} -p ${CI_REGISTRY_PASSWORD} ${CI_REGISTRY}
+
 pylint:
+  <<: *tags-definition
   image: python:latest
   stage: lint
   script:
@@ -23,11 +32,8 @@ pylint:
     - pip install flask pylint python-telegram-bot waitress pygelf
     - pylint --rcfile=.pylintrc src/*.py
 
-.docker_login: &docker_login_template
-  before_script:
-    - docker login -u ${CI_REGISTRY_USER} -p ${CI_REGISTRY_PASSWORD} ${CI_REGISTRY}
-
-build:test:
+build:
+  <<: *tags-definition
   <<: *docker_login_template
   stage: build
   script:
@@ -35,6 +41,7 @@ build:test:
     - docker push ${CONTAINER_TEST_IMAGE}
 
 release:tagged:
+  <<: *tags-definition
   <<: *docker_login_template
   stage: release
   only:
@@ -45,6 +52,7 @@ release:tagged:
     - docker push ${CONTAINER_TAGGED_IMAGE}
 
 release:latest:
+  <<: *tags-definition
   <<: *docker_login_template
   stage: release
   only:
