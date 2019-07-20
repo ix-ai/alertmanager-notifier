@@ -39,7 +39,7 @@ def configure_logging():
             port=int(os.environ.get('GELF_PORT', 12201)),
             debug=True,
             include_extra_fields=True,
-            _ix_id=sys.modules['__main__'].__file__.split(".")[0]  # sets _ix_id to `alertmanager-telegram-bot`
+            _ix_id=os.path.splitext(sys.modules['__main__'].__file__)[0]  # sets _ix_id to `alertmanager-telegram-bot`
         )
         LOG.addHandler(GELF)
         gelf_enabled = True
