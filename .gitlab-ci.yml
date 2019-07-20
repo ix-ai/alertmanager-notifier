@@ -1,63 +1,44 @@
-image: docker:latest
-
 variables:
   DOCKER_DRIVER: overlay2
-  CONTAINER_TEST_IMAGE: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
-  CONTAINER_TAGGED_IMAGE: $CI_REGISTRY_IMAGE:$CI_COMMIT_TAG
-  CONTAINER_RELEASE_IMAGE: $CI_REGISTRY_IMAGE:latest
   PORT: 9119
 
 stages:
   - lint
   - build
-  - release
-
-services:
-  - docker:dind
 
 .tags-template: &tags-definition
   tags:
     - ix-ai
 
-.docker_login: &docker_login_template
-  before_script:
-    - docker login -u ${CI_REGISTRY_USER} -p ${CI_REGISTRY_PASSWORD} ${CI_REGISTRY}
+.build-template: &build-definition
+  image:
+    name: gcr.io/kaniko-project/executor:debug
+    entrypoint: [""]
+  stage: build
+  script:
+    - echo "{\"auths\":{\"${CI_REGISTRY}\":{\"username\":\"${CI_REGISTRY_USER}\",\"password\":\"${CI_REGISTRY_PASSWORD}\"}}}" > /kaniko/.docker/config.json
+    - /kaniko/executor --context ${CI_PROJECT_DIR} --dockerfile ${CI_PROJECT_DIR}/Dockerfile --build-arg PORT=${PORT} --destination ${IMAGE_TAG}
 
 pylint:
-  <<: *tags-definition
   image: python:latest
   stage: lint
   script:
     - curl -o .pylintrc https://tool.ix.ai/.pylintrc
-    - pip install flask pylint python-telegram-bot waitress pygelf
+    - pip install waitress pygelf flask pylint python-telegram-bot
     - pylint --rcfile=.pylintrc src/*.py
 
-build:
+build:test:
+  except:
+    - master
+  before_script:
+    - export IMAGE_TAG="${CI_REGISTRY_IMAGE}:${CI_COMMIT_REF_NAME}"
   <<: *tags-definition
-  <<: *docker_login_template
-  stage: build
-  script:
-    - docker build -t ${CONTAINER_TEST_IMAGE} --build-arg PORT="${PORT}" .
-    - docker push ${CONTAINER_TEST_IMAGE}
+  <<: *build-definition
 
-release:tagged:
-  <<: *tags-definition
-  <<: *docker_login_template
-  stage: release
-  only:
-    - tags
-  script:
-    - docker pull ${CONTAINER_TEST_IMAGE}
-    - docker tag ${CONTAINER_TEST_IMAGE} ${CONTAINER_TAGGED_IMAGE}
-    - docker push ${CONTAINER_TAGGED_IMAGE}
-
-release:latest:
-  <<: *tags-definition
-  <<: *docker_login_template
-  stage: release
+build:release:
   only:
     - master
-  script:
-    - docker pull ${CONTAINER_TEST_IMAGE}
-    - docker tag ${CONTAINER_TEST_IMAGE} ${CONTAINER_RELEASE_IMAGE}
-    - docker push ${CONTAINER_RELEASE_IMAGE}
+  before_script:
+    - export IMAGE_TAG="${CI_REGISTRY_IMAGE}:latest"
+  <<: *tags-definition
+  <<: *build-definition
