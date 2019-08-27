@@ -1,6 +1,7 @@
 variables:
   DOCKER_DRIVER: overlay2
   PORT: 9119
+  DOCKERHUB_REPOSITORY: ixdotai/alertmanager-telegram-bot
 
 stages:
   - lint
