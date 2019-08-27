@@ -1,14 +1,11 @@
 # alertmanager-telegram-bot
 
-
-[![pipeline status](https://gitlab.com/ix.ai/alertmanager-telegram-bot/badges/latest/pipeline.svg)](https://gitlab.com/ix.ai/alertmanager-telegram-bot/commits/latest)
-
 A simple webserver in Flask, that translates alertmanager alerts into telegram messages.
 
 **WARNING!** This is for testing only. It is not considered production ready!
 
 ## Running a simple test
-```
+```sh
 docker run --rm -it \
     -p 9999:9999 \
     -e TELEGRAM_TOKEN="your token" \
@@ -18,14 +15,25 @@ docker run --rm -it \
     --name alertmanager-telegram-bot \
     registry.gitlab.com/ix.ai/alertmanager-telegram-bot:latest
 ```
+Alterantively, use the hub.docker.com image:
+```sh
+docker run --rm -it \
+    -p 9999:9999 \
+    -e TELEGRAM_TOKEN="your token" \
+    -e TELEGRAM_CHAT_ID="your chat id" \
+    -e PORT=9999 \
+    -e GELF_HOST=graylog \
+    --name alertmanager-telegram-bot \
+    ixdotai/alertmanager-telegram-bot:latest
+```
 
 Run the test agains the bot:
-```
+```sh
 curl -X POST -d '{"alerts": [{"status":"Testing alertmanager-telegram-bot", "labels":[], "annotations":[], "generatorURL": "http://localhost"}]}' -H "Content-Type: application/json" localhost:9119/alert
 ```
 
 ## Configure alertmanager
-```
+```yml
 route:
   receiver: 'telegram alerts'
   routes:
@@ -45,3 +53,7 @@ receivers:
 * `GELF_PORT` (defaults to `12201`) - the port to use for GELF logging
 * `LOGLEVEL` (default: `INFO`)
 * `PORT` (default: 9119) - the port for the bot
+
+## Resources:
+* GitLab: https://gitlab.com/ix.ai/alertmanager-telegram-bot
+* Docker Hub: https://hub.docker.com/r/ixdotai/alertmanager-telegram-bot
