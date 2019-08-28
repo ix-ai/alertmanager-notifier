@@ -24,14 +24,23 @@ pylint:
   image: python:latest
   stage: lint
   script:
-    - curl -o .pylintrc https://tool.ix.ai/.pylintrc
     - pip install waitress pygelf flask pylint python-telegram-bot
     - pylint --rcfile=.pylintrc src/*.py
   <<: *tags-definition
 
-build:test:
+build:dev:
   except:
     - master
+    - tags
+  before_script:
+    - export IMAGE_TAG_GITLAB="${CI_REGISTRY_IMAGE}:dev-${CI_COMMIT_REF_NAME}"
+    - export IMAGE_TAG_GITHUB="index.docker.io/${DOCKERHUB_REPOSITORY}:dev-${CI_COMMIT_REF_NAME}"
+  <<: *tags-definition
+  <<: *build-definition
+
+build:tags:
+  only:
+    - tags
   before_script:
     - export IMAGE_TAG_GITLAB="${CI_REGISTRY_IMAGE}:${CI_COMMIT_REF_NAME}"
     - export IMAGE_TAG_GITHUB="index.docker.io/${DOCKERHUB_REPOSITORY}:${CI_COMMIT_REF_NAME}"
