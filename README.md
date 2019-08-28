@@ -7,8 +7,6 @@
 
 A simple webserver in Flask, that translates [alertmanager](https://github.com/prometheus/alertmanager) alerts into telegram messages.
 
-**WARNING!** This is for testing only. It is not considered production ready!
-
 ## Running a simple test:
 ```sh
 docker run --rm -it \

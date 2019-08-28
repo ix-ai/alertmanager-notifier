@@ -1,11 +1,13 @@
 variables:
   DOCKER_DRIVER: overlay2
   PORT: 9119
-  DOCKERHUB_REPOSITORY: ixdotai/alertmanager-telegram-bot
+  DOCKERHUB_REPO_PREFIX: ixdotai
+  DOCKERHUB_REPO_NAME: alertmanager-telegram-bot
 
 stages:
   - lint
   - build
+  - release
 
 .tags-template: &tags-definition
   tags:
@@ -41,7 +43,7 @@ build:tags:
   only:
     - tags
   before_script:
-    - export DESTINATION="--destination ${CI_REGISTRY_IMAGE}:${CI_COMMIT_REF_NAME} --destination=index.docker.io/${DOCKERHUB_REPOSITORY}:${CI_COMMIT_REF_NAME}"
+    - export DESTINATION="--destination ${CI_REGISTRY_IMAGE}:${CI_COMMIT_REF_NAME} --destination=index.docker.io/${DOCKERHUB_REPO_PREFIX}/${DOCKERHUB_REPO_NAME}:${CI_COMMIT_REF_NAME}"
   <<: *tags-definition
   <<: *build-definition
 
@@ -49,6 +51,19 @@ build:release:
   only:
     - master
   before_script:
-    - export DESTINATION="--destination ${CI_REGISTRY_IMAGE}:latest --destination=index.docker.io/${DOCKERHUB_REPOSITORY}:latest"
+    - export DESTINATION="--destination ${CI_REGISTRY_IMAGE}:latest --destination=index.docker.io/${DOCKERHUB_REPO_PREFIX}/${DOCKERHUB_REPO_NAME}:latest"
   <<: *tags-definition
   <<: *build-definition
+
+publish:readme:
+  stage: release
+  variables:
+    README_PATH: ${CI_PROJECT_DIR}/README.md
+  only:
+    - master
+  image:
+    name: sheogorath/readme-to-dockerhub:latest
+    entrypoint: ['']
+  script:
+    - node /app/index.js
+  <<: *tags-definition
