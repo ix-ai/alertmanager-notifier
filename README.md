@@ -1,10 +1,15 @@
 # alertmanager-telegram-bot
 
-A simple webserver in Flask, that translates alertmanager alerts into telegram messages.
+[![Pipeline Status](https://gitlab.com/ix.ai/alertmanager-telegram-bot/badges/master/pipeline.svg)](https://gitlab.com/ix.ai/alertmanager-telegram-bot/)
+[![Docker Stars](https://img.shields.io/docker/stars/ixdotai/alertmanager-telegram-bot.svg)](https://hub.docker.com/r/ixdotai/alertmanager-telegram-bot/)
+[![Docker Pulls](https://img.shields.io/docker/pulls/ixdotai/alertmanager-telegram-bot.svg)](https://hub.docker.com/r/ixdotai/alertmanager-telegram-bot/)
+[![Gitlab Project](https://img.shields.io/badge/GitLab-Project-554488.svg)](https://gitlab.com/ix.ai/alertmanager-telegram-bot/)
+
+A simple webserver in Flask, that translates [alertmanager](https://github.com/prometheus/alertmanager) alerts into telegram messages.
 
 **WARNING!** This is for testing only. It is not considered production ready!
 
-## Running a simple test
+## Running a simple test:
 ```sh
 docker run --rm -it \
     -p 9999:9999 \
@@ -32,7 +37,7 @@ Run the test agains the bot:
 curl -X POST -d '{"alerts": [{"status":"Testing alertmanager-telegram-bot", "labels":[], "annotations":[], "generatorURL": "http://localhost"}]}' -H "Content-Type: application/json" localhost:9119/alert
 ```
 
-## Configure alertmanager
+## Configure alertmanager:
 ```yml
 route:
   receiver: 'telegram alerts'
@@ -57,3 +62,6 @@ receivers:
 ## Resources:
 * GitLab: https://gitlab.com/ix.ai/alertmanager-telegram-bot
 * Docker Hub: https://hub.docker.com/r/ixdotai/alertmanager-telegram-bot
+
+## Credits:
+This work is inspired by [nopp/alertmanager-webhook-telegram](https://github.com/nopp/alertmanager-webhook-telegram)
