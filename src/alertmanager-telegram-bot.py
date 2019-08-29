@@ -31,7 +31,7 @@ BOT = telegram.Bot(token=SETTINGS['telegram_token'])
 
 def configure_logging():
     """ Configures the logging """
-    gelf_enabled: False
+    gelf_enabled = False
 
     if os.environ.get('GELF_HOST'):
         GELF = pygelf.GelfUdpHandler(
@@ -107,6 +107,6 @@ def _post_message(message, content=None):
 if __name__ == '__main__':
     configure_logging()
     port = int(os.environ.get('PORT', '9119'))
-    host = '*'
+    host = os.environ.get('ADDRESS', '*')
     LOG.info("Starting alertmanager-telegram-bot, listening on {}:{}".format(host, port))
     serve(APP, host=host, port=port)

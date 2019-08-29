@@ -56,6 +56,7 @@ receivers:
 * `GELF_PORT` (defaults to `12201`) - the port to use for GELF logging
 * `LOGLEVEL` (default: `INFO`)
 * `PORT` (default: 9119) - the port for the bot
+* `ADDRESS` (default: `*`) - the address for the bot to listen on
 
 ## Resources:
 * GitLab: https://gitlab.com/ix.ai/alertmanager-telegram-bot
