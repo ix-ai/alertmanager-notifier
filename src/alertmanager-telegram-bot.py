@@ -57,6 +57,8 @@ def parse_alert():
 
     message = '{} alert(s)\n'.format(len(content['alerts']))
 
+    LOG.info('Received {}.'.format(message))
+
     for alert in content['alerts']:
         LOG.debug("Parsing alert: {}".format(alert))
         message += '<b>{}</b>\n'.format(alert['status'])
@@ -79,7 +81,8 @@ def _post_message(message, content=None):
             parse_mode='HTML',
             disable_web_page_preview=True
         )
-        LOG.debug("Sent message: {}".format(message))
+        LOG.info("Sent message to telegram.")
+        LOG.debug("Message: {}".format(message))
 
     except TimeoutError as error:
         LOG.warning('TimeoutError: {}'.format(error))
@@ -88,7 +91,7 @@ def _post_message(message, content=None):
 
     except Exception as error:
         # Catch all the other exceptions so that alertmanager doesn't go into a loop
-        LOG.exception("Exception occured: {}".format(error))
+        LOG.error("Exception occured: {}".format(error))
         exception_content = html.escape('{}'.format(error))
         body_content = html.escape('{}'.format(content))
         BOT.sendMessage(
