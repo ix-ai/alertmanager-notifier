@@ -52,13 +52,13 @@ receivers:
 
 | **Variable**         | **Default** | **Mandatory** | **Description**                                                                                                            |
 |:---------------------|:-----------:|:-------------:|:---------------------------------------------------------------------------------------------------------------------------|
-| `TELEGRAM_TOKEN      | -           | *YES*         | see the [Telegram documentation](https://core.telegram.org/bots#creating-a-new-bot) how to get a new token                 |
-| `BLACKLIST_SERVICES` | -           | *YES*         | see this question on [stackoverflow](https://stackoverflow.com/questions/32423837/telegram-bot-how-to-get-a-group-chat-id) |
-| `LOGLEVEL`           | `INFO`      | *NO*          | [Logging Level](https://docs.python.org/3/library/logging.html#levels)                                                     |
-| `GELF_HOST`          | -           | *NO*          | if set, the exporter will also log to this [GELF](https://docs.graylog.org/en/3.0/pages/gelf.html) capable host on UDP     |
-| `GELF_PORT`          | `12201`     | *NO*          | Ignored, if `GELF_HOST` is unset. The UDP port for GELF logging                                                            |
-| `PORT`               | `9119`      | *NO*          | The port for prometheus metrics                                                                                            |
-| `ADDRESS`            | `*`         | *NO*          | The address for the bot to listen on                                                                                       |
+| `TELEGRAM_TOKEN`     | -           | **YES**       | see the [Telegram documentation](https://core.telegram.org/bots#creating-a-new-bot) how to get a new token                 |
+| `BLACKLIST_SERVICES` | -           | **YES**       | see this question on [stackoverflow](https://stackoverflow.com/questions/32423837/telegram-bot-how-to-get-a-group-chat-id) |
+| `LOGLEVEL`           | `INFO`      | **NO**        | [Logging Level](https://docs.python.org/3/library/logging.html#levels)                                                     |
+| `GELF_HOST`          | -           | **NO**        | if set, the exporter will also log to this [GELF](https://docs.graylog.org/en/3.0/pages/gelf.html) capable host on UDP     |
+| `GELF_PORT`          | `12201`     | **NO**        | Ignored, if `GELF_HOST` is unset. The UDP port for GELF logging                                                            |
+| `PORT`               | `9119`      | **NO**        | The port for prometheus metrics                                                                                            |
+| `ADDRESS`            | `*`         | **NO**        | The address for the bot to listen on                                                                                       |
 
 ## Resources:
 * GitLab: https://gitlab.com/ix.ai/alertmanager-telegram-bot
