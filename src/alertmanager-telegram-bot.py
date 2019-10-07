@@ -63,9 +63,9 @@ def parse_alert():
         message += '\n<b>{}</b>\n'.format(alert['status'])
 
         for label in alert.get('labels', []):
-            message += '<b>{}</b>: {}\n'.format(label, alert['labels'][label])
+            message += '<b>{}</b>: {}\n'.format(html.escape(label), html.escape(alert['labels'][label]))
         for annotation in alert.get('annotations', []):
-            message += '<b>{}</b>: {}\n'.format(annotation, alert['annotations'][annotation])
+            message += '<b>{}</b>: {}\n'.format(html.escape(annotation), html.escape(alert['annotations'][annotation]))
 
         message += '<a href="{}">Generator URL</a>\n\n'.format(alert['generatorURL'])
         return _post_message(message, content)
@@ -93,13 +93,12 @@ def _post_message(message, content=None):
         LOG.error("Exception occured: {}".format(error))
         exception_content = html.escape('{}'.format(error))
         body_content = html.escape('{}'.format(content))
+        text = 'Failed to send alert to Telegram!\n'
+        text += 'Exception: <pre>{}</pre>\n'.format(exception_content)
+        text += 'Content: <pre>{}</pre>'.format(body_content)
         BOT.sendMessage(
             chat_id=SETTINGS['telegram_chat_id'],
-            text=(
-                'Failed to send alert to Telegram!\n',
-                'Exception: <pre>{}</pre>\n'.format(exception_content),
-                'Content: <pre>{}</pre>'.format(body_content)
-            ),
+            text=text,
             parse_mode='HTML',
         )
 
