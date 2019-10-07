@@ -55,13 +55,12 @@ def parse_alert():
     if not content or not content.get('alerts'):
         raise TypeError('`alerts` does not exist.')
 
-    message = '{} alert(s)\n'.format(len(content['alerts']))
-
+    message = '{} alert(s)'.format(len(content['alerts']))
     LOG.info('Received {}.'.format(message))
 
     for alert in content['alerts']:
         LOG.debug("Parsing alert: {}".format(alert))
-        message += '<b>{}</b>\n'.format(alert['status'])
+        message += '\n<b>{}</b>\n'.format(alert['status'])
 
         for label in alert.get('labels', []):
             message += '<b>{}</b>: {}\n'.format(label, alert['labels'][label])
