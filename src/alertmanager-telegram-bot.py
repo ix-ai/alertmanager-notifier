@@ -10,6 +10,7 @@ import pygelf
 from flask import Flask
 from flask import request
 from waitress import serve
+from jinja2 import Environment, FileSystemLoader
 import constants
 
 LOG = logging.getLogger(__name__)
@@ -23,6 +24,7 @@ logging.basicConfig(
 SETTINGS = {
     'telegram_token': os.environ.get('TELEGRAM_TOKEN'),
     'telegram_chat_id': os.environ.get('TELEGRAM_CHAT_ID'),
+    'template': os.environ.get('TEMPLATE', default='notify.html.j2'),
 }
 
 APP = Flask(__name__)
@@ -56,20 +58,14 @@ def parse_alert():
     if not content or not content.get('alerts'):
         raise TypeError('`alerts` does not exist.')
 
-    message = '{} alert(s)'.format(len(content['alerts']))
-    LOG.info('Received {}.'.format(message))
+    LOG.info('Received {} alert(s).'.format(len(content['alerts'])))
+    LOG.debug("Parsing content: {}".format(content))
 
-    for alert in content['alerts']:
-        LOG.debug("Parsing alert: {}".format(alert))
-        message += '\n<b>{}</b>\n'.format(alert['status'])
+    env = Environment(loader=FileSystemLoader('/templates'))
+    template = env.get_template(SETTINGS['template'])
+    message = template.render(a=content)
 
-        for label in alert.get('labels', []):
-            message += '<b>{}</b>: {}\n'.format(html.escape(label), html.escape(alert['labels'][label]))
-        for annotation in alert.get('annotations', []):
-            message += '<b>{}</b>: {}\n'.format(html.escape(annotation), html.escape(alert['annotations'][annotation]))
-
-        message += '<a href="{}">Generator URL</a>\n\n'.format(alert['generatorURL'])
-        return _post_message(message, content)
+    return _post_message(message, content)
 
 
 def _post_message(message, content=None):
@@ -112,4 +108,5 @@ if __name__ == '__main__':
     host = os.environ.get('ADDRESS', '*')
     # pylint: disable=no-member
     LOG.info("Starting alertmanager-telegram-bot {}, listening on {}:{}".format(constants.VERSION, host, port))
+    LOG.info("Using templates/{} for message templating".format(SETTINGS['template']))
     serve(APP, host=host, port=port)
