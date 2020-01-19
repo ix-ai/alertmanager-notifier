@@ -1,0 +1,4 @@
+waitress
+pygelf
+flask
+python-telegram-bot
