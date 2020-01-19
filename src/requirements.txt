@@ -1,4 +1,5 @@
+pygelf==0.3.6
+python-telegram-bot==12.3.0
 waitress
-pygelf
 flask
-python-telegram-bot
+jinja2
