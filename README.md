@@ -70,6 +70,7 @@ Starting with version v0.6.0, the images are multi-arch, with builds for amd64, 
 
 ## Resources:
 * GitLab: https://gitlab.com/ix.ai/alertmanager-telegram-bot
+* GitHub: https://github.com/ix-ai/alertmanager-telegram-bot
 * Docker Hub: https://hub.docker.com/r/ixdotai/alertmanager-telegram-bot
 
 ## Credits:
