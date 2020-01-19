@@ -16,7 +16,7 @@ docker run --rm -it \
     -e PORT=9999 \
     -e GELF_HOST=graylog \
     --name alertmanager-telegram-bot \
-    registry.gitlab.com/ix.ai/alertmanager-telegram-bot:latest
+    registry.gitlab.com/ix.ai/alertmanager-telegram-bot:v0.6.0
 ```
 Alterantively, use the hub.docker.com image:
 ```sh
@@ -59,6 +59,14 @@ receivers:
 | `GELF_PORT`          | `12201`     | **NO**        | Ignored, if `GELF_HOST` is unset. The UDP port for GELF logging                                                            |
 | `PORT`               | `9119`      | **NO**        | The port for prometheus metrics                                                                                            |
 | `ADDRESS`            | `*`         | **NO**        | The address for the bot to listen on                                                                                       |
+
+## Tags and Arch
+
+Starting with version v0.6.0, the images are multi-arch, with builds for amd64, arm64 and armv7.
+* `vN.N.N` - for example v0.6.0
+* `latest` - always pointing to the latest version
+* `dev-branch` - the last build on a feature/development branch
+* `dev-master` - the last build on the master branch
 
 ## Resources:
 * GitLab: https://gitlab.com/ix.ai/alertmanager-telegram-bot
