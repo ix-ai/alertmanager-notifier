@@ -10,6 +10,7 @@ import pygelf
 from flask import Flask
 from flask import request
 from waitress import serve
+import constants
 
 LOG = logging.getLogger(__name__)
 logging.basicConfig(
@@ -109,5 +110,6 @@ if __name__ == '__main__':
     configure_logging()
     port = int(os.environ.get('PORT', '9119'))
     host = os.environ.get('ADDRESS', '*')
-    LOG.info("Starting alertmanager-telegram-bot, listening on {}:{}".format(host, port))
+    # pylint: disable=no-member
+    LOG.info("Starting alertmanager-telegram-bot {}, listening on {}:{}".format(constants.VERSION, host, port))
     serve(APP, host=host, port=port)
