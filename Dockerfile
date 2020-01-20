@@ -7,7 +7,7 @@ COPY src/ /app
 COPY templates/ /templates
 
 RUN apk --no-cache upgrade && \
-    apk --no-cache add python3 py3-pip py3-waitress py3-flask py3-cryptography py3-jinja2 && \
+    apk --no-cache add python3 py3-pip py3-waitress py3-flask py3-cryptography && \
     pip3 install --no-cache-dir -r requirements.txt
 
 EXPOSE 9119
