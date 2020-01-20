@@ -8,9 +8,9 @@ import html
 import telegram
 import pygelf
 from flask import Flask
+from flask import render_template
 from flask import request
 from waitress import serve
-from jinja2 import Environment, FileSystemLoader
 import constants
 
 LOG = logging.getLogger(__name__)
@@ -27,7 +27,7 @@ SETTINGS = {
     'template': os.environ.get('TEMPLATE', default='notify.html.j2'),
 }
 
-APP = Flask(__name__)
+APP = Flask(__name__, template_folder='/templates')
 APP.secret_key = os.urandom(64).hex()
 BOT = telegram.Bot(token=SETTINGS['telegram_token'])
 
@@ -61,9 +61,7 @@ def parse_alert():
     LOG.info('Received {} alert(s).'.format(len(content['alerts'])))
     LOG.debug("Parsing content: {}".format(content))
 
-    env = Environment(loader=FileSystemLoader('/templates'))
-    template = env.get_template(SETTINGS['template'])
-    message = template.render(a=content)
+    message = render_template(SETTINGS['template'], a=content)
 
     return _post_message(message, content)
 
