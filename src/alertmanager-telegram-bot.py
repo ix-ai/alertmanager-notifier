@@ -6,6 +6,7 @@ import os
 import sys
 import html
 import telegram
+import pause
 import pygelf
 from flask import Flask
 from flask import render_template
@@ -78,10 +79,11 @@ def _post_message(message, content=None):
         LOG.info("Sent message to telegram.")
         LOG.debug("Message: {}".format(message))
 
-    except TimeoutError as error:
-        LOG.warning('TimeoutError: {}'.format(error))
-        # This should get alertmanager to retry
-        return "504 error - Internal Server Exception - TimeoutError", 504
+    except (TimeoutError, telegram.error.TimedOut, telegram.error.RetryAfter) as error:
+        LOG.warning('Exception caught - retrying: {}'.format(error))
+        # Wait for 2 seconds and then return the error to alertmanager
+        pause.seconds(2)
+        return "504 error - Internal Server Exception - {}".format(error), 504
 
     except Exception as error:
         # Catch all the other exceptions so that alertmanager doesn't go into a loop
