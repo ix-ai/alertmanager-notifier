@@ -5,8 +5,8 @@ import logging
 import os
 import sys
 import html
+import time
 import telegram
-import pause
 import pygelf
 from flask import Flask
 from flask import render_template
@@ -82,7 +82,7 @@ def _post_message(message, content=None):
     except (TimeoutError, telegram.error.TimedOut, telegram.error.RetryAfter) as error:
         LOG.warning('Exception caught - retrying: {}'.format(error))
         # Wait for 2 seconds and then return the error to alertmanager
-        pause.seconds(2)
+        time.sleep(2)
         return "504 error - Internal Server Exception - {}".format(error), 504
 
     except Exception as error:
