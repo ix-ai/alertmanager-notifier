@@ -15,6 +15,7 @@ from waitress import serve
 import constants
 
 LOG = logging.getLogger(__name__)
+
 logging.basicConfig(
     stream=sys.stdout,
     level=os.environ.get("LOGLEVEL", "INFO"),
@@ -27,6 +28,8 @@ SETTINGS = {
     'telegram_chat_id': os.environ.get('TELEGRAM_CHAT_ID'),
     'template': os.environ.get('TEMPLATE', default='notify.html.j2'),
 }
+
+FILENAME = os.path.splitext(sys.modules['__main__'].__file__)[0][1:]
 
 APP = Flask(__name__, template_folder='/templates')
 APP.secret_key = os.urandom(64).hex()
@@ -43,7 +46,7 @@ def configure_logging():
             port=int(os.environ.get('GELF_PORT', 12201)),
             debug=True,
             include_extra_fields=True,
-            _ix_id=os.path.splitext(sys.modules['__main__'].__file__)[0][1:],  # sets it to `alertmanager-telegram-bot`
+            _ix_id=FILENAME,  # sets it to `alertmanager-telegram-bot`
         )
         LOG.addHandler(GELF)
         gelf_enabled = True
@@ -107,6 +110,6 @@ if __name__ == '__main__':
     port = int(os.environ.get('PORT', '9119'))
     host = os.environ.get('ADDRESS', '*')
     # pylint: disable=no-member
-    LOG.info("Starting alertmanager-telegram-bot {}, listening on {}:{}".format(constants.VERSION, host, port))
+    LOG.info("Starting {} {}, listening on {}:{}".format(FILENAME, constants.VERSION, host, port))
     LOG.info("Using templates/{} for message templating".format(SETTINGS['template']))
     serve(APP, host=host, port=port)
