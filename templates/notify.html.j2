@@ -3,14 +3,13 @@
 {%- for alert in a['alerts'] %}
 
 {% if alert['status'] == 'firing' %}🔥{% else %}✅{% endif %}<b>{{ alert['status']|upper }}</b>{% if alert['status'] == 'firing' %}🔥{% else %}✅{% endif %}
+
 {% for label in alert['labels'] -%}
 <b>{{ label | e }}</b>: {{ alert['labels'][label]|e }}
-{% endfor -%}
-
+{% endfor %}
 {% for annotation in alert['annotations'] -%}
 <b>{{ annotation|e }}</b>: {{ alert['annotations'][annotation]|e }}
-{% endfor -%}
-
+{% endfor %}
 <b>Since:</b> {{ alert['startsAt'] }}
 {% if alert['status'] != 'firing' %}<b>Ended:</b> {{ alert['endsAt'] }}
 {% endif %}<b>Generator:</b> {{ alert['generatorURL'] }}
