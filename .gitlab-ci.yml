@@ -1,5 +1,5 @@
 variables:
-  DOCKERHUB_REPO_NAME: alertmanager-telegram-bot
+  DOCKERHUB_REPO_NAME: alertmanager-notifier
   ENABLE_ARM64: 'true'
   ENABLE_ARMv7: 'true'
   ENABLE_ARMv6: 'true'
