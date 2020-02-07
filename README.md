@@ -48,6 +48,7 @@ receivers:
 | `GOTIFY_URL`        | -                | the URL of the [Gotify](https://gotify.net/) server |
 | `GOTIFY_TOKEN`      | -                | the APP token for Gotify |
 | `GOTIFY_TEMPLATE`   | `markdown.md.j2` | allows you to specify another (HTML) template, in case you've mounted it under `/templates` |
+| `EXCLUDE_LABELS`    | -                | set this to anything to exclude the labels from the notifications |
 | `LOGLEVEL`          | `INFO`           | [Logging Level](https://docs.python.org/3/library/logging.html#levels) |
 | `PORT`              | `8899`           | the port for incoming connections |
 | `ADDRESS`           | `*`              | the address for the bot to listen on |
