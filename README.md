@@ -61,16 +61,12 @@ receivers:
 
 ## Tags and Arch
 
-Starting with version v0.6.1, the images are multi-arch, with builds for amd64, arm64, armv7 and armv6.
-* `vN.N.N` - for example v0.6.0
+The images are multi-arch, with builds for amd64, arm64, armv7 and armv6.
+* `vN.N.N` - for example v0.0.1
 * `latest` - always pointing to the latest version
-* `dev-branch` - the last build on a feature/development branch
 * `dev-master` - the last build on the master branch
 
 ## Resources:
 * GitLab: https://gitlab.com/ix.ai/alertmanager-notifier
 * GitHub: https://github.com/ix-ai/alertmanager-notifier
 * Docker Hub: https://hub.docker.com/r/ixdotai/alertmanager-notifier
-
-## Credits:
-This work is inspired by [nopp/alertmanager-webhook-telegram](https://github.com/nopp/alertmanager-webhook-telegram)
