@@ -35,6 +35,12 @@ def parse_request():
     return return_message
 
 
+@a.route('/healthz')
+def healthz():
+    """ Healthcheck """
+    return (f'{__package__} {version}', 200)
+
+
 def startup():
     """ Starts everything up """
     settings = {
