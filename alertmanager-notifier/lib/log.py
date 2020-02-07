@@ -3,11 +3,11 @@
 """ Global logging configuration """
 
 import logging
-import pygelf
 
 
-def setup_logger(name, level='INFO', gelf_host=None, gelf_port=None, **kwargs):
+def setup_logger(name=__package__, level='INFO'):
     """ sets up the logger """
+    logging.basicConfig(handlers=[logging.NullHandler()])
     formatter = logging.Formatter(
         fmt='%(asctime)s.%(msecs)03d %(levelname)s [%(module)s.%(funcName)s] %(message)s',
         datefmt='%Y-%m-%d %H:%M:%S',
@@ -18,15 +18,5 @@ def setup_logger(name, level='INFO', gelf_host=None, gelf_port=None, **kwargs):
     handler = logging.StreamHandler()
     handler.setFormatter(formatter)
     logger.addHandler(handler)
-
-    if gelf_host and gelf_port:
-        handler = pygelf.GelfUdpHandler(
-            host=gelf_host,
-            port=gelf_port,
-            debug=True,
-            include_extra_fields=True,
-            **kwargs
-        )
-        logger.addHandler(handler)
 
     return logger

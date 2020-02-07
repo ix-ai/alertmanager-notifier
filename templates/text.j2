@@ -1,0 +1,19 @@
+{% if title -%}
+# {{ title }}
+{%- endif %}
+{%- for alert in alerts %}
+
+{% if alert['status'] == 'firing' %}🔥{% else %}✅{% endif %}{{ alert['status']|upper }}{% if alert['status'] == 'firing' %}🔥{% else %}✅{% endif %}
+{% for annotation in alert['annotations'] -%}
+{{ annotation }}: {{ alert['annotations'][annotation] }}
+{% endfor %}
+
+{% if not exclude_labels -%}
+{% for label in alert['labels'] -%}
+{{ label }}: {{ alert['labels'][label] }}
+{% endfor %}
+{%- endif %}
+Since: {{ alert['startsAt'] }}
+{% if alert['status'] != 'firing' %}Ended: {{ alert['endsAt'] }}
+{% endif %}Generator: {{ alert['generatorURL'] }}
+{%- endfor %}

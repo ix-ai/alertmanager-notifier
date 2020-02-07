@@ -1,4 +1,5 @@
 pygelf==0.3.6
 python-telegram-bot==12.3.0
+requests==2.22.0
 waitress
 flask
