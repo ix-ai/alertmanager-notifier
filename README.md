@@ -50,6 +50,8 @@ receivers:
 | `GOTIFY_TEMPLATE`   | `markdown.md.j2` | allows you to specify another (HTML) template, in case you've mounted it under `/templates` |
 | `EXCLUDE_LABELS`    | -                | set this to anything to exclude the labels from the notifications |
 | `LOGLEVEL`          | `INFO`           | [Logging Level](https://docs.python.org/3/library/logging.html#levels) |
+| `GELF_HOST`         | -                | If set, the exporter will also log to this [GELF](https://docs.graylog.org/en/3.0/pages/gelf.html) capable host on UDP |
+| `GELF_PORT`         | `12201`          | Ignored, if `GELF_HOST` is unset. The UDP port for GELF logging |
 | `PORT`              | `8899`           | the port for incoming connections |
 | `ADDRESS`           | `*`              | the address for the bot to listen on |
 
