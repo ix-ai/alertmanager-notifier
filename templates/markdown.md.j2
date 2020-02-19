@@ -1,7 +1,7 @@
 {% if title -%}
 **{{ title }}**
 {% endif %}
-{% for alert in alerts -%}
+{% for alert in alerts %}
 
 {% if alert['status'] == 'firing' %}🔥{% else %}✅{% endif %}**{{ alert['status']|upper }}**{% if alert['status'] == 'firing' %}🔥{% else %}✅{% endif %}
 

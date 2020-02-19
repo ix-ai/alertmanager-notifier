@@ -6,13 +6,18 @@ import logging
 import time
 import telegram
 from ..lib import processor
-
+from . import core
 
 log = logging.getLogger(__package__)
 
 
-class Notifier():
-    """ The notify class """
+def start(**kwargs):
+    """ Returns an instance of TelegramNotifier """
+    return TelegramNotifier(**kwargs)
+
+
+class TelegramNotifier(core.Notifier):
+    """ The TelegramNotifier class """
 
     def __init__(
             self,
@@ -26,6 +31,7 @@ class Notifier():
         self.template = telegram_template
         self.exclude_labels = exclude_labels
         log.debug(f"Initialized")
+        super().__init__()
 
     def send(self, processed_alerts):
         """
@@ -82,6 +88,3 @@ class Notifier():
             exclude_labels=self.exclude_labels,
         )
         return self.send(processed_alerts)
-
-    def noop(self):
-        """ Does nothing except keeping pylint happy"""

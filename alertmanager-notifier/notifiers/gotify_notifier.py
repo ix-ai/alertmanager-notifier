@@ -7,12 +7,18 @@ from urllib.parse import urljoin
 import requests
 from ..lib import constants
 from ..lib import processor
+from . import core
 
 log = logging.getLogger(__package__)
 
 
-class Notifier():
-    """ The notify class """
+def start(**kwargs):
+    """ Returns an instance of GotifyNotifier """
+    return GotifyNotifier(**kwargs)
+
+
+class GotifyNotifier(core.Notifier):
+    """ The GotifyNotifier class """
 
     def __init__(
             self,
@@ -26,6 +32,7 @@ class Notifier():
         self.template = gotify_template
         self.exclude_labels = exclude_labels
         log.debug(f"Initialized with {gotify_url}")
+        super().__init__()
 
     def send(self, processed_alerts):
         """
@@ -84,6 +91,3 @@ class Notifier():
             exclude_labels=self.exclude_labels,
         )
         return self.send(processed_alerts)
-
-    def noop(self):
-        """ Does nothing except keeping pylint happy"""
