@@ -8,7 +8,7 @@ import telegram
 from flask import Flask
 from flask import request
 from .lib import constants
-from . import notifiers
+from .lib import notifiers
 
 a = Flask(__name__, template_folder='../templates')
 a.secret_key = os.urandom(64).hex()
