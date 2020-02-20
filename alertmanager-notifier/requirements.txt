@@ -1,5 +1,4 @@
 pygelf==0.3.6
-python-telegram-bot==12.4.2
-requests==2.22.0
+ix_notifiers>=0.0.119494958
 waitress==1.4.3
 flask

@@ -30,4 +30,8 @@ def setup_logger(name=__package__, level='INFO', gelf_host=None, gelf_port=None,
         )
         logger.addHandler(handler)
 
+    ix_logger = logging.getLogger('ix_notifiers')
+    ix_logger.setLevel(level)
+    ix_logger.addHandler(handler)
+
     return logger
