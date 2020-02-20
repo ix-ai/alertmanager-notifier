@@ -4,6 +4,7 @@
 [![Docker Stars](https://img.shields.io/docker/stars/ixdotai/alertmanager-notifier.svg)](https://hub.docker.com/r/ixdotai/alertmanager-notifier/)
 [![Docker Pulls](https://img.shields.io/docker/pulls/ixdotai/alertmanager-notifier.svg)](https://hub.docker.com/r/ixdotai/alertmanager-notifier/)
 [![Gitlab Project](https://img.shields.io/badge/GitLab-Project-554488.svg)](https://gitlab.com/ix.ai/alertmanager-notifier/)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fix-ai%2Falertmanager-notifier.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fix-ai%2Falertmanager-notifier?ref=badge_shield)
 
 A notifier for [alertmanager](https://github.com/prometheus/alertmanager), written in python. It supports multiple notification channels and new ones can be easily added.
 
@@ -72,3 +73,7 @@ The images are multi-arch, with builds for amd64, arm64, armv7 and armv6.
 * GitLab: https://gitlab.com/ix.ai/alertmanager-notifier
 * GitHub: https://github.com/ix-ai/alertmanager-notifier
 * Docker Hub: https://hub.docker.com/r/ixdotai/alertmanager-notifier
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fix-ai%2Falertmanager-notifier.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fix-ai%2Falertmanager-notifier?ref=badge_large)
