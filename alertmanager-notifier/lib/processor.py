@@ -8,7 +8,7 @@ from flask import render_template
 log = logging.getLogger(__package__)
 
 
-def template_message(alerts, include_title=False, template='markdown.md.j2', exclude_labels=True):
+def template_message(alerts, include_title=False, template='markdown.md.j2', exclude_labels=True, current_length=0):
     """
     Formats the alerts for markdown notifiers
 
@@ -24,6 +24,12 @@ def template_message(alerts, include_title=False, template='markdown.md.j2', exc
     if not include_title:
         processed.update({'title': f"{title.replace('#','')}"})
         title = None
-    message = render_template(template, title=title, alerts=alerts, exclude_labels=exclude_labels)
+    message = render_template(
+        template,
+        title=title,
+        alerts=alerts,
+        exclude_labels=exclude_labels,
+        current_length=current_length,
+    )
     processed['message'] = message.replace('#', '')
     return processed
