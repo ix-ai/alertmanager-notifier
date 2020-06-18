@@ -17,7 +17,6 @@ def template_message(alerts, include_title=False, template='markdown.md.j2', exc
 
     @return: False if the message processing fails otherwise dict
     """
-    render_template(template_name_or_list=template, alerts=alerts)
     processed = {'message': ''}
     alerts_count = len(alerts)
     title = f"{alerts_count} alert(s) received"
