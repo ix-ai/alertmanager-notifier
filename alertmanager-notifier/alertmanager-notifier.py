@@ -51,6 +51,7 @@ def startup():
         'port': int(os.environ.get('PORT', '8899')),
         'host': os.environ.get('ADDRESS', '*'),
         'telegram_template': os.environ.get('TELEGRAM_TEMPLATE', 'html.j2'),
+        'telegram_template_too_long': os.environ.get('TELEGRAM_TEMPLATE_TOO_LONG', 'too_long.html.j2'),
         'gotify_template': os.environ.get('GOTIFY_TEMPLATE', 'markdown.md.j2'),
         'null_template': os.environ.get('NULL_TEMPLATE', 'text.j2'),
         'exclude_labels': os.environ.get('EXCLUDE_LABELS'),

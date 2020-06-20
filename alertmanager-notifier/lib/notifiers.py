@@ -31,6 +31,7 @@ class Notify(IxNotifiers):
 
     def __init__(self, **kwargs):
         self.telegram_template = kwargs.get('telegram_template', 'html.j2')
+        self.telegram_template_too_long = kwargs.get('telegram_template_too_long', 'too_long.html.j2')
         self.gotify_template = kwargs.get('gotify_template', 'markdown.md.j2')
         self.null_template = kwargs.get('null_template', 'text.j2')
         self.exclude_labels = kwargs.get('exclude_labels', True)
@@ -66,6 +67,15 @@ class Notify(IxNotifiers):
             template=self.telegram_template,
             exclude_labels=self.exclude_labels,
         )
+        msg_len = len(processed_alerts['message'])
+        if msg_len > 4096:
+            log.warning(f"The message is too long ({msg_len}>4096)")
+            processed_alerts = processor.template_message(
+                alerts=kwargs['alerts'],
+                include_title=True,
+                template=self.telegram_template_too_long,
+                current_length=msg_len,
+            )
         processed_alerts.update({'parse_mode': 'HTML'})
         return notifier.send(**processed_alerts)
 

@@ -45,6 +45,7 @@ receivers:
 | `TELEGRAM_TOKEN`    | -                | see the [Telegram documentation](https://core.telegram.org/bots#creating-a-new-bot) how to get a new token |
 | `TELEGRAM_CHAT_ID`  | -                | see this question on [stackoverflow](https://stackoverflow.com/questions/32423837/telegram-bot-how-to-get-a-group-chat-id) |
 | `TELEGRAM_TEMPLATE` | `html.j2`        | allows you to specify another (HTML) template, in case you've mounted it under `/templates` |
+| `TELEGRAM_TEMPLATE_TOO_LONG` | `too_long.html.j2` | allows you to specify another (HTML) template for Telegram, for the case that the message size exceeds the maximum message size (4096 characters) |
 | `GOTIFY_URL`        | -                | the URL of the [Gotify](https://gotify.net/) server |
 | `GOTIFY_TOKEN`      | -                | the APP token for Gotify |
 | `GOTIFY_TEMPLATE`   | `markdown.md.j2` | allows you to specify another (HTML) template, in case you've mounted it under `/templates` |
