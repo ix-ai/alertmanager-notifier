@@ -32,4 +32,7 @@ def template_message(alerts, include_title=False, template='markdown.md.j2', exc
         current_length=current_length,
     )
     processed['message'] = message.replace('#', '')
+    for alert in alerts:
+        if int(alert['annotations'].get('priority', -1)) > processed.get('priority', -1):
+            processed['priority'] = int(alert['annotations']['priority'])
     return processed
