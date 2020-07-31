@@ -58,6 +58,14 @@ receivers:
 
 **NOTE**: If no notifier is configured, the `Null` notifier will be used and the notification will only be logged
 
+## Gotify Priority
+
+Gotify supports message priorities, that are also mapped to Android Importance (see [gotify/android#18](https://github.com/gotify/android/issues/18)).
+
+If you set the *annotation* `priority` to your alert, with a number as value, this will be passed through to gotify.
+
+**Note**: Since alertmanager supports sending multiple alerts in one message, alertmanager-notifier will always use the **highest** priority value for gotify from the batch.
+
 ## Templating
 
 **alertmanager-notifier** supports jinja templating. take a look in the [templates/](templates/) folder for examples for that. If you want to use your own template, mount it as a volume in docker and set the `*_TEMPLATE` environment variable. The mount path should be under `/templates/` (for example `/templates/my-amazing-template`).
