@@ -19,7 +19,7 @@ version = f'{constants.VERSION}-{constants.BUILD}'
 
 @a.route('/alert', methods=['POST'])
 def parse_request():
-    """ Converts the alert from alertmanager into HTML for telegram """
+    """ Receives the alert and sends the notification """
     content = request.get_json()
 
     return_message = ""
