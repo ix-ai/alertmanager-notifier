@@ -22,6 +22,8 @@ def start(**kwargs):
             if k.split('_')[0] == notifier:
                 notifier_settings.update({k: v})
         notifier_settings.update({'exclude_labels': kwargs.get('exclude_labels', True)})
+        # See https://github.com/ix-ai/alertmanager-notifier/issues/8
+        notifier_settings.update({'retry': False})
         n.register(notifier, **notifier_settings)
     return Notify(**kwargs)
 
