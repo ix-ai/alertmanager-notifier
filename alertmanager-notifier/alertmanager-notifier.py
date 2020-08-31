@@ -3,6 +3,7 @@
 
 import logging
 import os
+from distutils.util import strtobool
 from waitress import serve
 import telegram
 from flask import Flask
@@ -46,6 +47,7 @@ def startup():
     settings = {
         'telegram_token': os.environ.get('TELEGRAM_TOKEN'),
         'telegram_chat_id': os.environ.get('TELEGRAM_CHAT_ID'),
+        'telegram_retry_on_failure': os.environ.get('TELEGRAM_RETRY_ON_FAILURE', 'yes'),
         'gotify_url': os.environ.get('GOTIFY_URL'),
         'gotify_token': os.environ.get('GOTIFY_TOKEN'),
         'port': int(os.environ.get('PORT', '8899')),
@@ -57,6 +59,13 @@ def startup():
         'exclude_labels': os.environ.get('EXCLUDE_LABELS'),
         'notifiers': [],
     }
+
+    try:
+        settings['telegram_retry_on_failure'] = strtobool(settings['telegram_retry_on_failure'])
+    except ValueError:
+        w = f"`{settings['telegram_retry_on_failure']}` not understood for TELEGRAM_RETRY_ON_FAILURE. Setting to True."
+        log.warning(w)
+        settings['telegram_retry_on_failure'] = True
 
     if settings['telegram_token'] and settings['telegram_chat_id']:
         settings['notifiers'].append('telegram')

@@ -34,6 +34,7 @@ class Notify(IxNotifiers):
     def __init__(self, **kwargs):
         self.telegram_template = kwargs.get('telegram_template', 'html.j2')
         self.telegram_template_too_long = kwargs.get('telegram_template_too_long', 'too_long.html.j2')
+        self.telegram_retry_on_failure = kwargs.get('telegram_retry_on_failure', True)
         self.gotify_template = kwargs.get('gotify_template', 'markdown.md.j2')
         self.null_template = kwargs.get('null_template', 'text.j2')
         self.exclude_labels = kwargs.get('exclude_labels', True)
@@ -79,7 +80,10 @@ class Notify(IxNotifiers):
                 current_length=msg_len,
             )
         processed_alerts.update({'parse_mode': 'HTML'})
-        return notifier.send(**processed_alerts)
+        notification_return = notifier.send(**processed_alerts)
+        if not self.telegram_retry_on_failure:
+            return True
+        return notification_return
 
     def null_notify(self, notifier, **kwargs):
         """ dispatches directly """
