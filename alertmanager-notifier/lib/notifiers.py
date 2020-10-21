@@ -22,7 +22,7 @@ def start(**kwargs):
             if k.split('_')[0] == notifier:
                 notifier_settings.update({k: v})
         # Common variables
-        notifier_settings.update({'exclude_labels': kwargs.get('exclude_labels', True)})
+        notifier_settings.update({'exclude_labels': kwargs['exclude_labels']})
         n.register(notifier, **notifier_settings)
     return Notify(**kwargs)
 
