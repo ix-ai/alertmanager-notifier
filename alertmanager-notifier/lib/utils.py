@@ -1,11 +1,35 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-""" Formats the alertmanager alerts into messages """
+""" Various utilities """
 
 import logging
+from distutils.util import strtobool
 from flask import render_template
 
 log = logging.getLogger(__package__)
+
+
+def redact(params: dict, settings: dict, message: str) -> str:
+    """
+        based on params and the values of settings, it replaces sensitive
+        information in message with a redacted string
+    """
+    for param, setting in params.items():
+        if setting.get('redact') and settings.get(param):
+            message = str(message).replace(settings.get(param), 'xxxREDACTEDxxx')
+    return message
+
+
+def convert_type(param: str, target: str):
+    """
+        converts string param to type target
+    """
+    converted = param
+    if target == "boolean":
+        converted = bool(strtobool(param))
+    if target == "integer":
+        converted = int(param)
+    return converted
 
 
 def template_message(alerts, include_title=False, template='markdown.md.j2', exclude_labels=True, current_length=0):
