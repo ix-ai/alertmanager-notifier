@@ -4,7 +4,7 @@
 
 import logging
 from ix_notifiers.core import IxNotifiers
-from . import processor
+from .utils import template_message
 
 log = logging.getLogger(__package__)
 
@@ -21,9 +21,8 @@ def start(**kwargs):
             # Ensures that only the settings for this notifier are passed
             if k.split('_')[0] == notifier:
                 notifier_settings.update({k: v})
+        # Common variables
         notifier_settings.update({'exclude_labels': kwargs.get('exclude_labels', True)})
-        # See https://github.com/ix-ai/alertmanager-notifier/issues/8
-        notifier_settings.update({'retry': False})
         n.register(notifier, **notifier_settings)
     return Notify(**kwargs)
 
@@ -32,12 +31,8 @@ class Notify(IxNotifiers):
     """ the Notify class """
 
     def __init__(self, **kwargs):
-        self.telegram_template = kwargs.get('telegram_template', 'html.j2')
-        self.telegram_template_too_long = kwargs.get('telegram_template_too_long', 'too_long.html.j2')
-        self.telegram_retry_on_failure = kwargs.get('telegram_retry_on_failure', True)
-        self.gotify_template = kwargs.get('gotify_template', 'markdown.md.j2')
-        self.null_template = kwargs.get('null_template', 'text.j2')
-        self.exclude_labels = kwargs.get('exclude_labels', True)
+        for variable, value in kwargs.items():
+            setattr(self, variable, value)
         super().__init__()
 
     def notify(self, **kwargs):
@@ -52,8 +47,9 @@ class Notify(IxNotifiers):
 
     def gotify_notify(self, notifier, **kwargs):
         """ parses the arguments, formats the message and dispatches it """
+        # pylint: disable=no-member
         log.debug('Sending message to gotify')
-        processed_alerts = processor.template_message(
+        processed_alerts = template_message(
             alerts=kwargs['alerts'],
             include_title=False,
             template=self.gotify_template,
@@ -63,8 +59,9 @@ class Notify(IxNotifiers):
 
     def telegram_notify(self, notifier, **kwargs):
         """ parses the arguments, formats the message and dispatches it """
+        # pylint: disable=no-member
         log.debug('Sending message to telegram')
-        processed_alerts = processor.template_message(
+        processed_alerts = template_message(
             alerts=kwargs['alerts'],
             include_title=True,
             template=self.telegram_template,
@@ -73,7 +70,7 @@ class Notify(IxNotifiers):
         msg_len = len(processed_alerts['message'])
         if msg_len > 4096:
             log.warning(f"The message is too long ({msg_len}>4096)")
-            processed_alerts = processor.template_message(
+            processed_alerts = template_message(
                 alerts=kwargs['alerts'],
                 include_title=True,
                 template=self.telegram_template_too_long,
@@ -81,14 +78,14 @@ class Notify(IxNotifiers):
             )
         processed_alerts.update({'parse_mode': 'HTML'})
         notification_return = notifier.send(**processed_alerts)
-        if not self.telegram_retry_on_failure:
-            return True
+        log.debug(notification_return)
         return notification_return
 
     def null_notify(self, notifier, **kwargs):
         """ dispatches directly """
+        # pylint: disable=no-member
         log.debug('Sending message to null')
-        processed_alerts = processor.template_message(
+        processed_alerts = template_message(
             alerts=kwargs['alerts'],
             include_title=True,
             template=self.null_template,

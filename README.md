@@ -10,7 +10,7 @@ A notifier for [alertmanager](https://github.com/prometheus/alertmanager), writt
 ## Running a simple test:
 ```sh
 docker run --rm -it \
-    -p 9999:9999 \
+    -p 8899:8899 \
     -e TELEGRAM_TOKEN="your token" \
     -e TELEGRAM_CHAT_ID="your chat id" \
     -e GOTIFY_URL="https://gotify" \
@@ -22,7 +22,7 @@ docker run --rm -it \
 
 Run the test agains the bot:
 ```sh
-curl -X POST -d '{"alerts": [{"status":"Testing alertmanager-notifier", "labels":[], "annotations":[], "generatorURL": "http://localhost"}]}' -H "Content-Type: application/json" localhost:9119/alert
+curl -X POST -d '{"alerts": [{"status":"Testing alertmanager-notifier", "labels":{}, "annotations":{}, "generatorURL": "http://localhost"}]}' -H "Content-Type: application/json" localhost:8899/alert
 ```
 
 ## Configure alertmanager:
@@ -46,11 +46,12 @@ receivers:
 | `TELEGRAM_CHAT_ID`  | -                | see this question on [stackoverflow](https://stackoverflow.com/questions/32423837/telegram-bot-how-to-get-a-group-chat-id) |
 | `TELEGRAM_TEMPLATE` | `html.j2`        | allows you to specify another (HTML) template, in case you've mounted it under `/templates` |
 | `TELEGRAM_TEMPLATE_TOO_LONG` | `too_long.html.j2` | allows you to specify another (HTML) template for Telegram, for the case that the message size exceeds the maximum message size (4096 characters) |
-| `TELEGRAM_RETRY_ON_FAILURE` | `yes` | Set this variable to `no` so that alertmanager-notifier always sends a `200 OK` to alertmanager, even if the Telegram notification wasn't successful |
+| `TELEGRAM_MAX_RETRIES` | `0`           | The maximum number of times an alert should be tried to be sent out (`0` for unlimited) |
+| `TELEGRAM_ALWAYS_SUCCEED` | `no`       | Set this variable to `yes` so that alertmanager-notifier always sends a `200 OK` to alertmanager, even if the Telegram notification wasn't successful |
 | `GOTIFY_URL`        | -                | the URL of the [Gotify](https://gotify.net/) server |
 | `GOTIFY_TOKEN`      | -                | the APP token for Gotify |
 | `GOTIFY_TEMPLATE`   | `markdown.md.j2` | allows you to specify another (HTML) template, in case you've mounted it under `/templates` |
-| `EXCLUDE_LABELS`    | -                | set this to anything to exclude the labels from the notifications |
+| `EXCLUDE_LABELS`    | `yes`            | set this to `no` to include the labels from the notifications |
 | `LOGLEVEL`          | `INFO`           | [Logging Level](https://docs.python.org/3/library/logging.html#levels) |
 | `GELF_HOST`         | -                | If set, the exporter will also log to this [GELF](https://docs.graylog.org/en/3.0/pages/gelf.html) capable host on UDP |
 | `GELF_PORT`         | `12201`          | Ignored, if `GELF_HOST` is unset. The UDP port for GELF logging |
