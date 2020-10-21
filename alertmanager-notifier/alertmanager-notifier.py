@@ -114,7 +114,7 @@ def startup():
             pass
 
         try:
-            if not settings.get(param):
+            if param not in settings:
                 settings[param] = convert_type(param_settings['default'], param_settings['type'])
             log.info(f'{param.upper()} is set to `{redact(params, settings, settings[param])}`')
         except KeyError:  # No default value for the param
