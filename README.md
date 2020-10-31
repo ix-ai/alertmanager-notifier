@@ -17,7 +17,7 @@ docker run --rm -it \
     -e GOTIFY_TOKEN="your gotify token" \
     -e EXCLUDE_LABELS="yes" \
     --name alertmanager-notifier \
-    ixdotai/alertmanager-notifier:latest
+    registry.gitlab.com/ix.ai/alertmanager-notifier:latest
 ```
 
 Run the test agains the bot:
@@ -78,6 +78,10 @@ The images are multi-arch, with builds for amd64, arm64, armv7 and armv6.
 * `vN.N.N` - for example v0.0.1
 * `latest` - always pointing to the latest version
 * `dev-master` - the last build on the master branch
+
+### Images:
+* Docker Hub: `ixdotai/alertmanager-notifier`
+* Gitlab Registry: `registry.gitlab.com/ix.ai/alertmanager-notifier`
 
 ## Resources:
 * GitLab: https://gitlab.com/ix.ai/alertmanager-notifier
