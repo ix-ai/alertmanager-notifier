@@ -17,3 +17,4 @@ Since: {{ alert['startsAt'] }}
 {% if alert['status'] != 'firing' %}Ended: {{ alert['endsAt'] }}
 {% endif %}Generator: {{ alert['generatorURL'] }}
 {%- endfor %}
+Alertmanager URL: {{ external_url }}

@@ -51,7 +51,7 @@ class Notify(IxNotifiers):
         log.debug('Sending message to gotify')
         processed_alerts = template_message(
             alerts=kwargs['alerts'],
-            alert_url=kwargs['externalURL'],
+            external_url=kwargs['externalURL'],
             include_title=False,
             template=self.gotify_template,
             exclude_labels=self.exclude_labels,
@@ -64,7 +64,7 @@ class Notify(IxNotifiers):
         log.debug('Sending message to telegram')
         processed_alerts = template_message(
             alerts=kwargs['alerts'],
-            alert_url=kwargs['externalURL'],
+            external_url=kwargs['externalURL'],
             include_title=True,
             template=self.telegram_template,
             exclude_labels=self.exclude_labels,
@@ -74,7 +74,7 @@ class Notify(IxNotifiers):
             log.warning(f"The message is too long ({msg_len}>4096)")
             processed_alerts = template_message(
                 alerts=kwargs['alerts'],
-                alert_url=kwargs['externalURL'],
+                external_url=kwargs['externalURL'],
                 include_title=True,
                 template=self.telegram_template_too_long,
                 current_length=msg_len,
@@ -90,7 +90,7 @@ class Notify(IxNotifiers):
         log.debug('Sending message to null')
         processed_alerts = template_message(
             alerts=kwargs['alerts'],
-            alert_url=kwargs['externalURL'],
+            external_url=kwargs['externalURL'],
             include_title=True,
             template=self.null_template,
             exclude_labels=self.exclude_labels,

@@ -15,4 +15,4 @@
 {% if alert['status'] != 'firing' %}<b>Ended:</b> <code>{{ alert['endsAt'] }}</code>
 {% endif %}<b>Generator</b>: {{ alert['generatorURL'] }}
 {% endfor -%}
-<b>Alertmanager URL:</b> {{ alert_url }}
+<b>Alertmanager URL:</b> {{ external_url }}
