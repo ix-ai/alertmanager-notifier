@@ -52,6 +52,7 @@ class Notify(IxNotifiers):
         processed_alerts = template_message(
             alerts=kwargs['alerts'],
             external_url=kwargs['externalURL'],
+            receiver=kwargs['receiver'],
             include_title=False,
             template=self.gotify_template,
             exclude_labels=self.exclude_labels,
@@ -65,6 +66,7 @@ class Notify(IxNotifiers):
         processed_alerts = template_message(
             alerts=kwargs['alerts'],
             external_url=kwargs['externalURL'],
+            receiver=kwargs['receiver'],
             include_title=True,
             template=self.telegram_template,
             exclude_labels=self.exclude_labels,
@@ -75,6 +77,7 @@ class Notify(IxNotifiers):
             processed_alerts = template_message(
                 alerts=kwargs['alerts'],
                 external_url=kwargs['externalURL'],
+                receiver=kwargs['receiver'],
                 include_title=True,
                 template=self.telegram_template_too_long,
                 current_length=msg_len,
@@ -91,6 +94,7 @@ class Notify(IxNotifiers):
         processed_alerts = template_message(
             alerts=kwargs['alerts'],
             external_url=kwargs['externalURL'],
+            receiver=kwargs['receiver'],
             include_title=True,
             template=self.null_template,
             exclude_labels=self.exclude_labels,
