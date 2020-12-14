@@ -4,7 +4,7 @@
 {%- for alert in alerts %}
 
 {% if alert['status'] == 'firing' %}🔥{% else %}✅{% endif %}{{ alert['status']|upper }}{% if alert['status'] == 'firing' %}🔥{% else %}✅{% endif %}
-{% for annotation in alert['annotations'] -%}
+{% for annotation in alert['annotations'] | reverse -%}
 {{ annotation }}: {{ alert['annotations'][annotation] }}
 {% endfor %}
 
@@ -17,4 +17,4 @@ Since: {{ alert['startsAt'] }}
 {% if alert['status'] != 'firing' %}Ended: {{ alert['endsAt'] }}
 {% endif %}Generator: {{ alert['generatorURL'] }}
 {%- endfor %}
-Alertmanager URL: {{ external_url }}
+Alertmanager URL: {{ external_url }}/#/alerts?receiver={{ receiver | urlencode }}

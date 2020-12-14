@@ -5,13 +5,13 @@
 
 {% if alert['status'] == 'firing' %}🔥{% else %}✅{% endif %}**{{ alert['status']|upper }}**{% if alert['status'] == 'firing' %}🔥{% else %}✅{% endif %}
 
-{% for annotation in alert['annotations'] -%}
-**{{ annotation }}**: `{{ alert['annotations'][annotation] }}`  
+{% for annotation in alert['annotations'] | reverse -%}
+**{{ annotation | safe }}**: `{{ alert['annotations'][annotation] | safe }}`  
 {% endfor %}
 
 {% if not exclude_labels -%}
 {% for label in alert['labels'] -%}
-**{{ label }}**: `{{ alert['labels'][label] }}`  
+**{{ label | safe }}**: {{ alert['labels'][label] | safe }}
 {% endfor -%}
 
 {%- endif %}
@@ -19,4 +19,4 @@
 {% if alert['status'] != 'firing' %}**Ended:** `{{ alert['endsAt'] }}`  
 {% endif %}**Generator**: [Prometheus Query]({{ alert['generatorURL'] }})  
 {% endfor -%}
-**Alertmanager URL**: [{{ external_url }}]({{ external_url }})
+**Alertmanager URL**: [View Alerts on Alertmanager]({{ external_url }}/#/alerts?receiver={{ receiver | urlencode }})
