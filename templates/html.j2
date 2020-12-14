@@ -11,7 +11,7 @@
 <b>{{ label | safe }}</b>: {{ alert['labels'][label] | safe }}
 {% endfor %}
 {% endif -%}
-<b>Since:</b> <code>{{ alert['startsAt'] }}</code>
+<b>Since</b>: <code>{{ alert['startsAt'] }}</code>
 {% if alert['status'] != 'firing' %}<b>Ended:</b> <code>{{ alert['endsAt'] }}</code>
 {% endif %}<b>Generator</b>: <a href="{{ alert['generatorURL'] }}">Prometheus Query</a>
 {% endfor -%}
