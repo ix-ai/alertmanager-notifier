@@ -3,7 +3,7 @@
 {%- endif %}
 {%- for alert in alerts %}
 {% if alert['status'] == 'firing' %}🔥{% else %}✅{% endif %}<b>{{ alert['status']|upper }}</b>{% if alert['status'] == 'firing' %}🔥{% else %}✅{% endif %}
-{% for annotation in alert['annotations'] -%}
+{% for annotation in alert['annotations'] | reverse -%}
 <b>{{ annotation|e }}</b>: <code>{{ alert['annotations'][annotation]|e }}</code>
 {% endfor %}
 {% if not exclude_labels -%}
