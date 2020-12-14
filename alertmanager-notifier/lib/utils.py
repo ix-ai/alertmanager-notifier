@@ -44,19 +44,18 @@ def template_message(include_title=False, template='markdown.md.j2', exclude_lab
     processed = {'message': ''}
     alerts_count = len(kwargs['alerts'])
     title = f"{alerts_count} alert(s) received"
-    message = ''
     if not include_title:
-        processed.update({'title': f"{title.replace('#','')}"})
+        processed.update({'title': f"{title}"})
         title = None
-    message = render_template(
+    processed['message'] = render_template(
         template,
         title=title,
         alerts=kwargs['alerts'],
         external_url=kwargs['external_url'],
+        receiver=kwargs['receiver'],
         exclude_labels=exclude_labels,
         current_length=current_length,
     )
-    processed['message'] = message.replace('#', '')
     for alert in kwargs['alerts']:
         if int(alert['annotations'].get('priority', -1)) > processed.get('priority', -1):
             processed['priority'] = int(alert['annotations']['priority'])
