@@ -4,11 +4,11 @@
 {%- for alert in alerts %}
 {% if alert['status'] == 'firing' %}🔥{% else %}✅{% endif %}<b>{{ alert['status']|upper }}</b>{% if alert['status'] == 'firing' %}🔥{% else %}✅{% endif %}
 {% for annotation in alert['annotations'] | reverse -%}
-<b>{{ annotation|e }}</b>: {{ alert['annotations'][annotation]|e }}
+<b>{{ annotation | safe }}</b>: {{ alert['annotations'][annotation] | safe }}
 {% endfor %}
 {% if not exclude_labels -%}
 {% for label in alert['labels'] -%}
-<b>{{ label | e }}</b>: {{ alert['labels'][label]|e }}
+<b>{{ label | safe }}</b>: {{ alert['labels'][label] | safe }}
 {% endfor %}
 {% endif -%}
 <b>Since:</b> <code>{{ alert['startsAt'] }}</code>
