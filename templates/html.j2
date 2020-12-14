@@ -15,4 +15,4 @@
 {% if alert['status'] != 'firing' %}<b>Ended</b>: <code>{{ alert['endsAt'] }}</code>
 {% endif %}<b>Generator</b>: <a href="{{ alert['generatorURL'] }}">Prometheus Query</a>
 {% endfor -%}
-<b>Alertmanager URL</b>: <a href="{{ external_url }}">Alertmanager Page</a> 
+<b>Alertmanager URL</b>: <a href="{{ external_url }}/#/alerts?receiver={{ receiver | urlencode }}">View Alerts on Alertmanager</a> 
