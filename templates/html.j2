@@ -3,16 +3,16 @@
 {%- endif %}
 {%- for alert in alerts %}
 {% if alert['status'] == 'firing' %}🔥{% else %}✅{% endif %}<b>{{ alert['status']|upper }}</b>{% if alert['status'] == 'firing' %}🔥{% else %}✅{% endif %}
-{% for annotation in alert['annotations'] -%}
-<b>{{ annotation|e }}</b>: <code>{{ alert['annotations'][annotation]|e }}</code>
+{% for annotation in alert['annotations'] | reverse -%}
+<b>{{ annotation | safe }}</b>: {{ alert['annotations'][annotation] | safe }}
 {% endfor %}
 {% if not exclude_labels -%}
 {% for label in alert['labels'] -%}
-<b>{{ label | e }}</b>: <code>{{ alert['labels'][label]|e }}</code>
+<b>{{ label | safe }}</b>: {{ alert['labels'][label] | safe }}
 {% endfor %}
 {% endif -%}
-<b>Since:</b> <code>{{ alert['startsAt'] }}</code>
-{% if alert['status'] != 'firing' %}<b>Ended:</b> <code>{{ alert['endsAt'] }}</code>
-{% endif %}<b>Generator</b>: {{ alert['generatorURL'] }}
+<b>Since</b>: <code>{{ alert['startsAt'] }}</code>
+{% if alert['status'] != 'firing' %}<b>Ended</b>: <code>{{ alert['endsAt'] }}</code>
+{% endif %}<b>Generator</b>: <a href="{{ alert['generatorURL'] }}">Prometheus Query</a>
 {% endfor -%}
-<b>Alertmanager URL:</b> {{ external_url }}
+<b>Alertmanager URL</b>: <a href="{{ external_url }}">Alertmanager Page</a> 
