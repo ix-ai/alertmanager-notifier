@@ -53,6 +53,7 @@ def template_message(include_title=False, template='markdown.md.j2', exclude_lab
         title=title,
         alerts=kwargs['alerts'],
         external_url=kwargs['external_url'],
+        receiver=kwargs['receiver'],
         exclude_labels=exclude_labels,
         current_length=current_length,
     )
