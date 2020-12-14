@@ -32,7 +32,7 @@ def convert_type(param: str, target: str):
     return converted
 
 
-def template_message(alerts, include_title=False, template='markdown.md.j2', exclude_labels=True, current_length=0):
+def template_message(include_title=False, template='markdown.md.j2', exclude_labels=True, current_length=0, **kwargs):
     """
     Formats the alerts for markdown notifiers
 
@@ -42,7 +42,7 @@ def template_message(alerts, include_title=False, template='markdown.md.j2', exc
     @return: False if the message processing fails otherwise dict
     """
     processed = {'message': ''}
-    alerts_count = len(alerts)
+    alerts_count = len(kwargs['alerts'])
     title = f"{alerts_count} alert(s) received"
     message = ''
     if not include_title:
@@ -51,12 +51,13 @@ def template_message(alerts, include_title=False, template='markdown.md.j2', exc
     message = render_template(
         template,
         title=title,
-        alerts=alerts,
+        alerts=kwargs['alerts'],
+        external_url=kwargs['external_url'],
         exclude_labels=exclude_labels,
         current_length=current_length,
     )
     processed['message'] = message.replace('#', '')
-    for alert in alerts:
+    for alert in kwargs['alerts']:
         if int(alert['annotations'].get('priority', -1)) > processed.get('priority', -1):
             processed['priority'] = int(alert['annotations']['priority'])
     return processed
