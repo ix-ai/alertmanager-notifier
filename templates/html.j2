@@ -13,6 +13,6 @@
 {% endif -%}
 <b>Since:</b> <code>{{ alert['startsAt'] }}</code>
 {% if alert['status'] != 'firing' %}<b>Ended:</b> <code>{{ alert['endsAt'] }}</code>
-{% endif %}<b>Generator</b>: {{ alert['generatorURL'] }}
+{% endif %}<b>Generator</b>: <a href="{{ alert['generatorURL'] }}">Prometheus Query</a>
 {% endfor -%}
-<b>Alertmanager URL:</b> {{ external_url }}
+<b>Alertmanager URL:</b> <a href="{{ external_url }}">Alertmanager Page</a> 
