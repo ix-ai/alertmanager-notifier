@@ -1,4 +1,4 @@
 {% if title -%}
 <pre>{{ title }}</pre>
 {%- endif %}
-<b>WARNING!</b>: The full alert list cannot be sent, since it is larger (<b>{{ current_length }}</b> characters) than the maximum message limit for Telegram (<b>4096</b> characters). Check the logs for details.
+<b>WARNING!</b>: The full alert list cannot be sent, since it is larger (<b>{{ current_length }}</b> characters) than the maximum message limit for Telegram (<b>4096</b> characters). Check the logs for details or check out the <a href="{{ external_url }}/#/alerts?receiver={{ receiver | urlencode }}">alerts on Alertmanager</a>.
