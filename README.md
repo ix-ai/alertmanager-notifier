@@ -22,7 +22,7 @@ docker run --rm -it \
 
 Run the test agains the bot:
 ```sh
-curl -X POST -d '{"externalURL": "http://localhost/", "receiver": "alertmanager-notifier-webhook", "alerts": [{"status":"Testing alertmanager-notifier", "labels":{}, "annotations":{}, "generatorURL": "http://localhost"}]}' -H "Content-Type: application/json" localhost:8899/alert
+curl -X POST -d '{"externalURL": "http://foo.bar/", "receiver": "alertmanager-notifier-webhook", "alerts": [{"status":"Testing alertmanager-notifier", "labels":{}, "annotations":{}, "generatorURL": "http://foo.bar"}]}' -H "Content-Type: application/json" localhost:8899/alert
 ```
 
 ## Configure alertmanager:
