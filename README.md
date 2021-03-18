@@ -80,8 +80,9 @@ The images are multi-arch, with builds for amd64, arm64, armv7 and armv6.
 * `dev-master` - the last build on the master branch
 
 ### Images:
-* Docker Hub: `ixdotai/alertmanager-notifier`
 * Gitlab Registry: `registry.gitlab.com/ix.ai/alertmanager-notifier`
+* GitHub Registry: `ghcr.io/ix-ai/alertmanager-notifier`
+* Docker Hub: `ixdotai/alertmanager-notifier`
 
 ## Resources:
 * GitLab: https://gitlab.com/ix.ai/alertmanager-notifier
