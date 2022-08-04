@@ -40,7 +40,7 @@ class Notify(IxNotifiers):
         success = ('All notification channels failed', 500)
         for notifier_name, notifier in self.registered.items():
             log.debug(f'Sending notification to {notifier_name}')
-            notification_method = getattr(f'{notifier_name}_notify')
+            notification_method = getattr(self, f'{notifier_name}_notify')
             if notification_method(notifier=notifier, **kwargs):
                 success = ('OK', 200)
         return success

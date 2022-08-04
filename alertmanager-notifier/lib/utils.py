@@ -3,6 +3,7 @@
 """ Various utilities """
 
 import logging
+# pylint: disable=deprecated-module
 from distutils.util import strtobool
 from flask import render_template
 
