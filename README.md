@@ -7,7 +7,8 @@
 
 A notifier for [alertmanager](https://github.com/prometheus/alertmanager), written in python. It supports multiple notification channels and new ones can be easily added.
 
-## Running a simple test:
+## Running a simple test
+
 ```sh
 docker run --rm -it \
     -p 8899:8899 \
@@ -21,11 +22,13 @@ docker run --rm -it \
 ```
 
 Run the test agains the bot:
+
 ```sh
 curl -X POST -d '{"externalURL": "http://foo.bar/", "receiver": "alertmanager-notifier-webhook", "alerts": [{"status":"Testing alertmanager-notifier", "labels":{}, "annotations":{}, "generatorURL": "http://foo.bar"}]}' -H "Content-Type: application/json" localhost:8899/alert
 ```
 
-## Configure alertmanager:
+## Configure alertmanager
+
 ```yml
 route:
   receiver: 'alertmanager webhook'
@@ -38,7 +41,7 @@ receivers:
       - url: http://alertmanager-notifier:8899/alert
 ```
 
-## Supported environment variables:
+## Supported environment variables
 
 | **Variable**        | **Default**      | **Description**                                                                                                            |
 |:--------------------|:----------------:|:---------------------------------------------------------------------------------------------------------------------------|
@@ -75,16 +78,13 @@ If you set the *annotation* `priority` to your alert, with a number as value, th
 ## Tags and Arch
 
 The images are multi-arch, with builds for amd64, arm64, armv7 and armv6.
+
 * `vN.N.N` - for example v0.0.1
 * `latest` - always pointing to the latest version
 * `dev-master` - the last build on the master branch
 
-### Images:
-* Gitlab Registry: `registry.gitlab.com/ix.ai/alertmanager-notifier`
-* GitHub Registry: `ghcr.io/ix-ai/alertmanager-notifier`
-* Docker Hub: `ixdotai/alertmanager-notifier`
+### Images
 
-## Resources:
-* GitLab: https://gitlab.com/ix.ai/alertmanager-notifier
-* GitHub: https://github.com/ix-ai/alertmanager-notifier
-* Docker Hub: https://hub.docker.com/r/ixdotai/alertmanager-notifier
+* Gitlab Registry: `registry.gitlab.com/ix.ai/alertmanager-notifier` - [gitlab.com/ix.ai/alertmanager-notifier](https://gitlab.com/ix.ai/alertmanager-notifier)
+* GitHub Registry: `ghcr.io/ix-ai/alertmanager-notifier` [github.com/ix-ai/alertmanager-notifier](https://github.com/ix-ai/alertmanager-notifier)
+* Docker Hub: `ixdotai/alertmanager-notifier` - [hub.docker.com/r/ixdotai/alertmanager-notifier](https://hub.docker.com/r/ixdotai/alertmanager-notifier)
