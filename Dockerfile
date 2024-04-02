@@ -8,6 +8,7 @@ RUN set -xeu; \
     mkdir -p /work/wheels; \
     apk add \
       python3-dev \
+      py3-pip \
       openssl-dev \
       gcc \
       musl-dev \
@@ -16,8 +17,7 @@ RUN set -xeu; \
       openssl-dev \
       cargo \
     ; \
-    python3 -m ensurepip; \
-    pip3 install -U \
+    pip3 install -U --break-system-packages \
       wheel \
       pip
 
@@ -32,10 +32,10 @@ COPY --from=builder /work /
 
 RUN set -xeu; \
     ls -lashi /wheels; \
-    apk add --no-cache python3; \
-    python3 -m ensurepip; \
-    pip3 install --no-cache-dir -U pip;\
+    apk add --no-cache py3-pip; \
     pip3 install \
+      -U \
+      --break-system-packages \
       --no-index \
       --no-cache-dir \
       --find-links /wheels \
