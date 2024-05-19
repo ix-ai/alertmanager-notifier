@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-""" Web server that translates alertmanager alerts into telegram messages """
+""" Web server that translates alertmanager alerts into messages for other services """
 
 import logging
 import os
@@ -28,6 +28,7 @@ def parse_request():
     try:
         log.info(f"Received {len(content['alerts'])} alert(s).")
         log.debug(f'Parsing content: {content}')
+        # pylint: disable-next=possibly-used-before-assignment
         return_message = n.notify(**content)
     except (KeyError, TypeError) as e:
         message = (
