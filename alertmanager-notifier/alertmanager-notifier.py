@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
-""" Web server that translates alertmanager alerts into telegram messages """
+""" Web server that translates alertmanager alerts into messages for other services """
 
 import logging
 import os
 from waitress import serve
-import telegram
 from flask import Flask
 from flask import request
 from .lib import constants
@@ -28,6 +27,7 @@ def parse_request():
     try:
         log.info(f"Received {len(content['alerts'])} alert(s).")
         log.debug(f'Parsing content: {content}')
+        # pylint: disable-next=possibly-used-before-assignment
         return_message = n.notify(**content)
     except (KeyError, TypeError) as e:
         message = (
@@ -49,21 +49,6 @@ def healthz():
 def startup():
     """ Starts everything up """
     params = {
-        'telegram_token': {
-            'type': 'string',
-            'redact': True,
-        },
-        'telegram_chat_id': {
-            'type': 'string',
-        },
-        'telegram_always_succeed': {
-            'type': 'boolean',
-            'default': 'no',
-        },
-        'telegram_max_retries': {
-            'type': 'integer',
-            'default': '0',
-        },
         'gotify_url': {
             'type': 'string',
         },
@@ -78,14 +63,6 @@ def startup():
         'address': {
             'type': 'string',
             'default': '*',
-        },
-        'telegram_template': {
-            'type': 'string',
-            'default': 'html.j2',
-        },
-        'telegram_template_too_long': {
-            'type': 'string',
-            'default': 'too_long.html.j2',
         },
         'gotify_template': {
             'type': 'string',
@@ -121,12 +98,6 @@ def startup():
             pass
 
     try:
-        if settings['telegram_token'] and settings['telegram_chat_id']:
-            settings['notifiers'].append('telegram')
-    except KeyError:
-        pass
-
-    try:
         if settings['gotify_url'] and settings['gotify_token']:
             settings['notifiers'].append('gotify')
     except KeyError:
@@ -142,7 +113,7 @@ if __name__ == '__main__':
         if not options['notifiers']:
             log.warning('No notifier configured. Using `null`')
         n = notifiers.start(**options)
-    except (ValueError, telegram.error.InvalidToken) as error:
+    except (ValueError) as error:
         log.error(error)
     else:
         serve(a, host=options['address'], port=options['port'], ident=f'{__package__} {version}')
