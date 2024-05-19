@@ -7,13 +7,15 @@
 
 A notifier for [alertmanager](https://github.com/prometheus/alertmanager), written in python. It supports multiple notification channels and new ones can be easily added.
 
+## Deprecation
+
+**Telegram Deprecation**: Starting with the version 0.5.0 of `alertmanager-notifier`, Telegram support is dropped. As such, the documentation has been updated to reflect it.
+
 ## Running a simple test
 
 ```sh
 docker run --rm -it \
     -p 8899:8899 \
-    -e TELEGRAM_TOKEN="your token" \
-    -e TELEGRAM_CHAT_ID="your chat id" \
     -e GOTIFY_URL="https://gotify" \
     -e GOTIFY_TOKEN="your gotify token" \
     -e EXCLUDE_LABELS="yes" \
@@ -45,12 +47,6 @@ receivers:
 
 | **Variable**        | **Default**      | **Description**                                                                                                            |
 |:--------------------|:----------------:|:---------------------------------------------------------------------------------------------------------------------------|
-| `TELEGRAM_TOKEN`    | -                | see the [Telegram documentation](https://core.telegram.org/bots#creating-a-new-bot) how to get a new token |
-| `TELEGRAM_CHAT_ID`  | -                | see this question on [stackoverflow](https://stackoverflow.com/questions/32423837/telegram-bot-how-to-get-a-group-chat-id) |
-| `TELEGRAM_TEMPLATE` | `html.j2`        | allows you to specify another (HTML) template, in case you've mounted it under `/templates` |
-| `TELEGRAM_TEMPLATE_TOO_LONG` | `too_long.html.j2` | allows you to specify another (HTML) template for Telegram, for the case that the message size exceeds the maximum message size (4096 characters) |
-| `TELEGRAM_MAX_RETRIES` | `0`           | The maximum number of times an alert should be tried to be sent out (`0` for unlimited) |
-| `TELEGRAM_ALWAYS_SUCCEED` | `no`       | Set this variable to `yes` so that alertmanager-notifier always sends a `200 OK` to alertmanager, even if the Telegram notification wasn't successful |
 | `GOTIFY_URL`        | -                | the URL of the [Gotify](https://gotify.net/) server |
 | `GOTIFY_TOKEN`      | -                | the APP token for Gotify |
 | `GOTIFY_TEMPLATE`   | `markdown.md.j2` | allows you to specify another (HTML) template, in case you've mounted it under `/templates` |

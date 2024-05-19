@@ -59,34 +59,6 @@ class Notify(IxNotifiers):
         )
         return notifier.send(**processed_alerts)
 
-    def telegram_notify(self, notifier, **kwargs):
-        """ parses the arguments, formats the message and dispatches it """
-        # pylint: disable=no-member
-        log.debug('Sending message to telegram')
-        processed_alerts = template_message(
-            alerts=kwargs['alerts'],
-            external_url=kwargs['externalURL'],
-            receiver=kwargs['receiver'],
-            include_title=True,
-            template=self.telegram_template,
-            exclude_labels=self.exclude_labels,
-        )
-        msg_len = len(processed_alerts['message'])
-        if msg_len > 4096:
-            log.warning(f"The message is too long ({msg_len}>4096)")
-            processed_alerts = template_message(
-                alerts=kwargs['alerts'],
-                external_url=kwargs['externalURL'],
-                receiver=kwargs['receiver'],
-                include_title=True,
-                template=self.telegram_template_too_long,
-                current_length=msg_len,
-            )
-        processed_alerts.update({'parse_mode': 'HTML'})
-        notification_return = notifier.send(**processed_alerts)
-        log.debug(notification_return)
-        return notification_return
-
     def null_notify(self, notifier, **kwargs):
         """ dispatches directly """
         # pylint: disable=no-member
