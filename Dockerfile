@@ -26,7 +26,8 @@ RUN pip3 wheel --prefer-binary -r /work/alertmanager-notifier/requirements.txt -
 FROM alpine:latest@sha256:beefdbd8a1da6d2915566fde36db9db0b524eb737fc57cd1367effd16dc0d06d
 
 LABEL maintainer="docker@ix.ai" \
-      ai.ix.repository="ix.ai/alertmanager-notifier"
+      ai.ix.repository="ix.ai/alertmanager-notifier" \
+      org.opencontainers.image.source="https://gitlab.com/ix.ai/alertmanager-notifier"
 
 COPY --from=builder /work /
 
