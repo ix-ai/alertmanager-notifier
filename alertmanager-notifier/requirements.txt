@@ -1,4 +1,4 @@
 pygelf==0.4.2
 ix_notifiers==0.0.1382933711
-waitress==3.0.1
+waitress==3.0.2
 flask
