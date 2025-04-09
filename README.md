@@ -1,8 +1,6 @@
 # alertmanager-notifier
 
 [![Pipeline Status](https://gitlab.com/ix.ai/alertmanager-notifier/badges/master/pipeline.svg)](https://gitlab.com/ix.ai/alertmanager-notifier/)
-[![Docker Stars](https://img.shields.io/docker/stars/ixdotai/alertmanager-notifier.svg)](https://hub.docker.com/r/ixdotai/alertmanager-notifier/)
-[![Docker Pulls](https://img.shields.io/docker/pulls/ixdotai/alertmanager-notifier.svg)](https://hub.docker.com/r/ixdotai/alertmanager-notifier/)
 [![Gitlab Project](https://img.shields.io/badge/GitLab-Project-554488.svg)](https://gitlab.com/ix.ai/alertmanager-notifier/)
 
 A notifier for [alertmanager](https://github.com/prometheus/alertmanager), written in python. It supports multiple notification channels and new ones can be easily added.

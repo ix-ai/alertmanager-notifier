@@ -10,8 +10,3 @@ variables:
 include:
   - project: 'egos-tech/pipelines'
     file: '/python-project.yml'
-  - template: Security/SAST.gitlab-ci.yml
-  - template: Dependency-Scanning.gitlab-ci.yml
-
-sast:
-  stage: test
